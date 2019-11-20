@@ -13,6 +13,8 @@ import javax.persistence.Table;
 @Table(name="pessoa")
 public class PessoaBeans {
 	
+	 // Teste
+	
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(name ="pes_id")
