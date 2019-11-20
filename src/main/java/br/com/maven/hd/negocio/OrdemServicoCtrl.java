@@ -8,7 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.maven.hd.beans.OrdemServicoBeans;
 import br.com.maven.hd.beans.PessoaBeans;
+import br.com.maven.hd.persintencia.OrdemServicoDao;
 import br.com.maven.hd.persintencia.PessoaDao;
 
 @ManagedBean
@@ -16,15 +18,15 @@ import br.com.maven.hd.persintencia.PessoaDao;
 public class OrdemServicoCtrl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private PessoaBeans pessoa;
+	private OrdemServicoBeans ordemServico;
 	private String filtro = "";
 	
-	public PessoaBeans getPessoa() {
-		return pessoa;
+	public OrdemServicoBeans getOrdemServico() {
+		return ordemServico;
 	}
 	
-	public void setPessoa(PessoaBeans pessoa) {
-		this.pessoa = pessoa;
+	public void setPessoa(OrdemServicoBeans OrdemServico) {
+		this.ordemServico = ordemServico;
 	}
 	
 	public String getFiltro() {
@@ -35,34 +37,34 @@ public class OrdemServicoCtrl implements Serializable {
 		this.filtro = filtro;
 	}
 	
-	public List<PessoaBeans> getListagem() {
-		return PessoaDao.listagem(filtro);
+	public List<OrdemServicoBeans> getListagem() {
+		return OrdemServicoDao.listagem(filtro);
 	}
 	
 	public String actionGravar() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		if(pessoa.getPes_id() == 0) {
-			PessoaDao.inserir(pessoa);
+		if(ordemServico.getOs_id() == 0) {
+			OrdemServicoDao.inserir(ordemServico);
 			context.addMessage(null, new FacesMessage("Sucesso","Inserido com sucesso"));
 		}
 		else {
-			PessoaDao.alterar(pessoa);
+			OrdemServicoDao.alterar(ordemServico);
 			context.addMessage(null, new FacesMessage("Sucesso","Alterado com sucesso"));
 		}
 		
-		return "lista_pessoas";
+		return "lista_OrdemServico";
 	}
 	
 	public String actionInserir() {
-		pessoa = new PessoaBeans();
-		return "lista_pessoas";
+		ordemServico = new OrdemServicoBeans();
+		return "lista_OrdemServico";
 	}
 	
 	public String actionExcluir() {
-		PessoaDao.excluir(pessoa);
+		OrdemServicoDao.excluir(ordemServico);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage("Sucesso","Excluido com sucesso"));
-		return "lista_pessoas";
+		return "lista_OrdemServico";
 	}
 }
 

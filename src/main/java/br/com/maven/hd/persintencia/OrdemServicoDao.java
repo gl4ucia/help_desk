@@ -9,7 +9,7 @@ import javax.transaction.Transaction;
 
 import org.hibernate.*;
 
-
+import br.com.maven.hd.beans.OrdemServicoBeans;
 import br.com.maven.hd.beans.PessoaBeans;
 import br.com.maven.hd.persintencia.HibernateUtil;
 
@@ -17,26 +17,26 @@ public class OrdemServicoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static void inserir(PessoaBeans Pessoa) {
+	public static void inserir(OrdemServicoBeans ordemServico) {
 		Session sessao = HibernateUtil.geSessionFactory().openSession();
 		org.hibernate.Transaction t = sessao.beginTransaction();
-		sessao.save(Pessoa);
+		sessao.save(ordemServico);
 		t.commit();
 		sessao.close();
 	}
 
-	public static void alterar(PessoaBeans  pessoa) {
+	public static void alterar(OrdemServicoBeans  OrdemServico) {
 		Session sessao = HibernateUtil.geSessionFactory().openSession();
 		org.hibernate.Transaction t = sessao.beginTransaction();
-		sessao.update(pessoa);
+		sessao.update(OrdemServico);
 		t.commit();
 		sessao.close();
 	}
 
-	public static void excluir(PessoaBeans pessoa) {
+	public static void excluir(OrdemServicoBeans ordemServico) {
 		Session sessao = HibernateUtil.geSessionFactory().openSession();
 		org.hibernate.Transaction t = sessao.beginTransaction();
-		sessao.delete(pessoa);
+		sessao.delete(ordemServico);
 		t.commit();
 		sessao.close();
 	}
@@ -45,10 +45,10 @@ public class OrdemServicoDao implements Serializable {
 		Session sessao = HibernateUtil.geSessionFactory().openSession();
 		org.hibernate.Query consulta;
 		if (filtro.trim().length() == 0) {
-			consulta = sessao.createQuery("from pessoa order by pes_nome");
+			consulta = sessao.createQuery("from ordemservico order by os_id");
 		} else {
 
-			consulta = sessao.createSQLQuery("from produto" + "where pes_nome like :parametro order by pes_nome");
+			consulta = sessao.createSQLQuery("from ordemservico" + "where os_id like :parametro order by os_id");
 			consulta.setString("parametro", "%" + filtro + "%");
 
 		}

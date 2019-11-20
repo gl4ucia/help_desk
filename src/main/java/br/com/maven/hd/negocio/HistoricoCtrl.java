@@ -8,7 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.maven.hd.beans.HistoricoBeans;
 import br.com.maven.hd.beans.PessoaBeans;
+import br.com.maven.hd.persintencia.HistoricoDao;
 import br.com.maven.hd.persintencia.PessoaDao;
 
 @ManagedBean
@@ -16,15 +18,15 @@ import br.com.maven.hd.persintencia.PessoaDao;
 public class HistoricoCtrl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private PessoaBeans pessoa;
+	private HistoricoBeans historico;
 	private String filtro = "";
 	
-	public PessoaBeans getPessoa() {
-		return pessoa;
-	}
+	public HistoricoBeans getHistorico() {
+		return historico;
+	} 
 	
-	public void setPessoa(PessoaBeans pessoa) {
-		this.pessoa = pessoa;
+	public void setHistorico(HistoricoBeans historico) {
+		this.historico = historico;
 	}
 	
 	public String getFiltro() {
@@ -35,34 +37,34 @@ public class HistoricoCtrl implements Serializable {
 		this.filtro = filtro;
 	}
 	
-	public List<PessoaBeans> getListagem() {
-		return PessoaDao.listagem(filtro);
+	public List<HistoricoBeans> getListagem() {
+		return HistoricoDao.listagem(filtro);
 	}
 	
 	public String actionGravar() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		if(pessoa.getPes_id() == 0) {
-			PessoaDao.inserir(pessoa);
+		if(historico.getH_id() == 0) {
+			HistoricoDao.inserir(historico);
 			context.addMessage(null, new FacesMessage("Sucesso","Inserido com sucesso"));
 		}
 		else {
-			PessoaDao.alterar(pessoa);
+			HistoricoDao.alterar(historico);
 			context.addMessage(null, new FacesMessage("Sucesso","Alterado com sucesso"));
 		}
 		
-		return "lista_pessoas";
+		return "lista_historico";
 	}
 	
 	public String actionInserir() {
-		pessoa = new PessoaBeans();
-		return "lista_pessoas";
+		historico = new HistoricoBeans();
+		return "lista_historico";
 	}
 	
 	public String actionExcluir() {
-		PessoaDao.excluir(pessoa);
+		HistoricoDao.excluir(historico);
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage("Sucesso","Excluido com sucesso"));
-		return "lista_pessoas";
+		return "lista_historico";
 	}
 }
 
